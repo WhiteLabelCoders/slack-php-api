@@ -22,15 +22,15 @@ class AdminUsergroupsAddTeams extends \JoliCode\Slack\Api\Runtime\Client\BaseEnd
      *
      * @param array $formParameters {
      *
-     *     @var bool $auto_provision when `true`, this method automatically creates new workspace accounts for the IDP group members
-     *     @var string $team_ids A comma separated list of encoded team (workspace) IDs. Each workspace *MUST* belong to the organization associated with the token.
-     *     @var string $usergroup_id An encoded usergroup (IDP Group) ID.
-     * }
+     * @var bool   $auto_provision when `true`, this method automatically creates new workspace accounts for the IDP group members
+     * @var string $team_ids A comma separated list of encoded team (workspace) IDs. Each workspace *MUST* belong to the organization associated with the token.
+     * @var string $usergroup_id An encoded usergroup (IDP Group) ID.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.teams:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.teams:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -88,16 +88,16 @@ class AdminUsergroupsAddTeams extends \JoliCode\Slack\Api\Runtime\Client\BaseEnd
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsergroupsAddTeamsPostResponse200|\JoliCode\Slack\Api\Model\AdminUsergroupsAddTeamsPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsAddTeamsPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsAddTeamsPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsAddTeamsPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsAddTeamsPostResponsedefault', 'json');
     }
 }

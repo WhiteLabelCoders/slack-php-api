@@ -22,11 +22,11 @@ class AdminConversationsRestrictAccessRemoveGroup extends \JoliCode\Slack\Api\Ru
      *
      * @param array $formParameters {
      *
-     *     @var string $channel_id the channel to remove the linked group from
-     *     @var string $group_id The [IDP Group](https://slack.com/help/articles/115001435788-Connect-identity-provider-groups-to-your-Enterprise-Grid-org) ID to remove from the private channel.
-     *     @var string $team_id The workspace where the channel exists. This argument is required for channels only tied to one workspace, and optional for channels that are shared across an organization.
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:write`
-     * }
+     * @var string $channel_id the channel to remove the linked group from
+     * @var string $group_id The [IDP Group](https://slack.com/help/articles/115001435788-Connect-identity-provider-groups-to-your-Enterprise-Grid-org) ID to remove from the private channel.
+     * @var string $team_id The workspace where the channel exists. This argument is required for channels only tied to one workspace, and optional for channels that are shared across an organization.
+     * @var string $token Authentication token. Requires scope: `admin.conversations:write`
+     *             }
      */
     public function __construct(array $formParameters = [])
     {
@@ -73,16 +73,16 @@ class AdminConversationsRestrictAccessRemoveGroup extends \JoliCode\Slack\Api\Ru
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsRestrictAccessRemoveGroupPostResponse200|\JoliCode\Slack\Api\Model\AdminConversationsRestrictAccessRemoveGroupPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsRestrictAccessRemoveGroupPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsRestrictAccessRemoveGroupPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsRestrictAccessRemoveGroupPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsRestrictAccessRemoveGroupPostResponsedefault', 'json');
     }
 }

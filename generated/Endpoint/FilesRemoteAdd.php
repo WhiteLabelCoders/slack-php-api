@@ -22,14 +22,14 @@ class FilesRemoteAdd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
      *
      * @param array $formParameters {
      *
-     *     @var string $external_id creator defined GUID for the file
-     *     @var string $external_url URL of the remote file
-     *     @var string $filetype type of file
-     *     @var string $indexable_file_contents A text file (txt, pdf, doc, etc.) containing textual search terms that are used to improve discovery of the remote file.
-     *     @var string $preview_image preview of the document via `multipart/form-data`
-     *     @var string $title title of the file being shared
-     *     @var string $token Authentication token. Requires scope: `remote_files:write`
-     * }
+     * @var string $external_id creator defined GUID for the file
+     * @var string $external_url URL of the remote file
+     * @var string $filetype type of file
+     * @var string $indexable_file_contents A text file (txt, pdf, doc, etc.) containing textual search terms that are used to improve discovery of the remote file.
+     * @var string $preview_image preview of the document via `multipart/form-data`
+     * @var string $title title of the file being shared
+     * @var string $token Authentication token. Requires scope: `remote_files:write`
+     *             }
      */
     public function __construct(array $formParameters = [])
     {
@@ -79,16 +79,16 @@ class FilesRemoteAdd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\FilesRemoteAddPostResponse200|\JoliCode\Slack\Api\Model\FilesRemoteAddPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\FilesRemoteAddPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\FilesRemoteAddPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\FilesRemoteAddPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\FilesRemoteAddPostResponsedefault', 'json');
     }
 }

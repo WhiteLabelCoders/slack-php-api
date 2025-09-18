@@ -16,6 +16,10 @@ namespace JoliCode\Slack\Api\Model;
 class ObjsReaction extends \ArrayObject
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var int|null
      */
     protected $count;
@@ -24,9 +28,14 @@ class ObjsReaction extends \ArrayObject
      */
     protected $name;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $users;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getCount(): ?int
     {
@@ -35,6 +44,7 @@ class ObjsReaction extends \ArrayObject
 
     public function setCount(?int $count): self
     {
+        $this->initialized['count'] = true;
         $this->count = $count;
 
         return $this;
@@ -47,13 +57,14 @@ class ObjsReaction extends \ArrayObject
 
     public function setName(?string $name): self
     {
+        $this->initialized['name'] = true;
         $this->name = $name;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getUsers(): ?array
     {
@@ -61,10 +72,11 @@ class ObjsReaction extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $users
+     * @param list<string>|null $users
      */
     public function setUsers(?array $users): self
     {
+        $this->initialized['users'] = true;
         $this->users = $users;
 
         return $this;

@@ -16,7 +16,11 @@ namespace JoliCode\Slack\Api\Model;
 class ChatUpdatePostResponse200Message
 {
     /**
-     * @var mixed[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<mixed>|null
      */
     protected $attachments;
     /**
@@ -28,8 +32,13 @@ class ChatUpdatePostResponse200Message
      */
     protected $text;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return mixed[]|null
+     * @return list<mixed>|null
      */
     public function getAttachments(): ?array
     {
@@ -37,28 +46,24 @@ class ChatUpdatePostResponse200Message
     }
 
     /**
-     * @param mixed[]|null $attachments
+     * @param list<mixed>|null $attachments
      */
     public function setAttachments(?array $attachments): self
     {
+        $this->initialized['attachments'] = true;
         $this->attachments = $attachments;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getBlocks()
     {
         return $this->blocks;
     }
 
-    /**
-     * @param mixed $blocks
-     */
     public function setBlocks($blocks): self
     {
+        $this->initialized['blocks'] = true;
         $this->blocks = $blocks;
 
         return $this;
@@ -71,6 +76,7 @@ class ChatUpdatePostResponse200Message
 
     public function setText(?string $text): self
     {
+        $this->initialized['text'] = true;
         $this->text = $text;
 
         return $this;

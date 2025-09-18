@@ -22,10 +22,10 @@ class UsergroupsUsersList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoin
      *
      * @param array $queryParameters {
      *
-     *     @var bool $include_disabled allow results that involve disabled User Groups
-     *     @var string $token Authentication token. Requires scope: `usergroups:read`
-     *     @var string $usergroup The encoded ID of the User Group to read.
-     * }
+     * @var bool   $include_disabled allow results that involve disabled User Groups
+     * @var string $token Authentication token. Requires scope: `usergroups:read`
+     * @var string $usergroup The encoded ID of the User Group to read.
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -71,16 +71,16 @@ class UsergroupsUsersList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoin
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\UsergroupsUsersListGetResponse200|\JoliCode\Slack\Api\Model\UsergroupsUsersListGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsUsersListGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsUsersListGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsUsersListGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsUsersListGetResponsedefault', 'json');
     }
 }

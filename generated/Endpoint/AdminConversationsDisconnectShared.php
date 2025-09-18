@@ -22,14 +22,14 @@ class AdminConversationsDisconnectShared extends \JoliCode\Slack\Api\Runtime\Cli
      *
      * @param array $formParameters {
      *
-     *     @var string $channel_id the channel to be disconnected from some workspaces
-     *     @var string $leaving_team_ids The team to be removed from the channel. Currently only a single team id can be specified.
-     * }
+     * @var string $channel_id the channel to be disconnected from some workspaces
+     * @var string $leaving_team_ids The team to be removed from the channel. Currently only a single team id can be specified.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.conversations:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminConversationsDisconnectShared extends \JoliCode\Slack\Api\Runtime\Cli
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsDisconnectSharedPostResponse200|\JoliCode\Slack\Api\Model\AdminConversationsDisconnectSharedPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsDisconnectSharedPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsDisconnectSharedPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsDisconnectSharedPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsDisconnectSharedPostResponsedefault', 'json');
     }
 }

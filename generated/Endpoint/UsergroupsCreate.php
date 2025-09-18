@@ -22,17 +22,17 @@ class UsergroupsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
      *
      * @param array $formParameters {
      *
-     *     @var string $channels a comma separated string of encoded channel IDs for which the User Group uses as a default
-     *     @var string $description a short description of the User Group
-     *     @var string $handle A mention handle. Must be unique among channels, users and User Groups.
-     *     @var bool $include_count include the number of users in each User Group
-     *     @var string $name A name for the User Group. Must be unique among User Groups.
-     * }
+     * @var string $channels a comma separated string of encoded channel IDs for which the User Group uses as a default
+     * @var string $description a short description of the User Group
+     * @var string $handle A mention handle. Must be unique among channels, users and User Groups.
+     * @var bool   $include_count include the number of users in each User Group
+     * @var string $name A name for the User Group. Must be unique among User Groups.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `usergroups:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `usergroups:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -92,16 +92,16 @@ class UsergroupsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\UsergroupsCreatePostResponse200|\JoliCode\Slack\Api\Model\UsergroupsCreatePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsCreatePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsCreatePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsCreatePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsCreatePostResponsedefault', 'json');
     }
 }

@@ -22,11 +22,11 @@ class TeamAccessLogs extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
      *
      * @param array $queryParameters {
      *
-     *     @var string $before end of time range of logs to include in results (inclusive)
-     *     @var string $count
-     *     @var string $page
-     *     @var string $token Authentication token. Requires scope: `admin`
-     * }
+     * @var string $before end of time range of logs to include in results (inclusive)
+     * @var string $count
+     * @var string $page
+     * @var string $token Authentication token. Requires scope: `admin`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -73,16 +73,16 @@ class TeamAccessLogs extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\TeamAccessLogsGetResponse200|\JoliCode\Slack\Api\Model\TeamAccessLogsGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\TeamAccessLogsGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\TeamAccessLogsGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\TeamAccessLogsGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\TeamAccessLogsGetResponsedefault', 'json');
     }
 }

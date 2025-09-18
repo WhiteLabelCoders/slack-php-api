@@ -22,15 +22,15 @@ class AdminUsergroupsListChannels extends \JoliCode\Slack\Api\Runtime\Client\Bas
      *
      * @param array $queryParameters {
      *
-     *     @var bool $include_num_members flag to include or exclude the count of members per channel
-     *     @var string $team_id ID of the the workspace
-     *     @var string $usergroup_id ID of the IDP group to list default channels for.
-     * }
+     * @var bool   $include_num_members flag to include or exclude the count of members per channel
+     * @var string $team_id ID of the the workspace
+     * @var string $usergroup_id ID of the IDP group to list default channels for.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.usergroups:read`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.usergroups:read`
+     *             }
      */
     public function __construct(array $queryParameters = [], array $headerParameters = [])
     {
@@ -88,16 +88,16 @@ class AdminUsergroupsListChannels extends \JoliCode\Slack\Api\Runtime\Client\Bas
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsergroupsListChannelsGetResponse200|\JoliCode\Slack\Api\Model\AdminUsergroupsListChannelsGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsListChannelsGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsListChannelsGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsListChannelsGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsListChannelsGetResponsedefault', 'json');
     }
 }

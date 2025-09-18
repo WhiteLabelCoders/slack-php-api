@@ -2,6 +2,28 @@
 
 ## Unreleased
 
+## 4.8.0 (2025-04-01)
+
+* Upgrade JanePHP generated code
+* Improve the Cursor paginated methods, add missing and remove obsoletes
+* **Specification override** Add the new `files.getUploadURLExternal` and `files.completeUploadExternal` endpoints
+* New `filesUploadV2` Client method to manipulate the new endpoints correctly
+
+## 4.7.1 (2024-06-28)
+
+* Upgrade JanePHP generated code
+* Allow more version of `jane-php/open-api-runtime`
+
+## 4.7.0 (2024-01-31)
+
+* Upgrade JanePHP generated code
+* Drop support for PHP 7 and Symfony 5
+
+## 4.6.0 (2023-11-10)
+
+* Upgrade JanePHP generated code
+* **Specification override** `metadata` added on `chat.postMessage`
+
 ## 4.5.0 (2022-03-30)
 
 * Fix `jane-php/open-api-2` version mismatch breaking the SDK generation

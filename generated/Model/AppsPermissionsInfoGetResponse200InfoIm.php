@@ -16,13 +16,22 @@ namespace JoliCode\Slack\Api\Model;
 class AppsPermissionsInfoGetResponse200InfoIm
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var ObjsResources|null
      */
     protected $resources;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $scopes;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getResources(): ?ObjsResources
     {
@@ -31,13 +40,14 @@ class AppsPermissionsInfoGetResponse200InfoIm
 
     public function setResources(?ObjsResources $resources): self
     {
+        $this->initialized['resources'] = true;
         $this->resources = $resources;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getScopes(): ?array
     {
@@ -45,10 +55,11 @@ class AppsPermissionsInfoGetResponse200InfoIm
     }
 
     /**
-     * @param string[]|null $scopes
+     * @param list<string>|null $scopes
      */
     public function setScopes(?array $scopes): self
     {
+        $this->initialized['scopes'] = true;
         $this->scopes = $scopes;
 
         return $this;

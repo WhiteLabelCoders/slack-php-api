@@ -22,9 +22,9 @@ class BotsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implement
      *
      * @param array $queryParameters {
      *
-     *     @var string $bot Bot user to get info on
-     *     @var string $token Authentication token. Requires scope: `users:read`
-     * }
+     * @var string $bot Bot user to get info on
+     * @var string $token Authentication token. Requires scope: `users:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -69,16 +69,16 @@ class BotsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implement
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\BotsInfoGetResponse200|\JoliCode\Slack\Api\Model\BotsInfoGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\BotsInfoGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\BotsInfoGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\BotsInfoGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\BotsInfoGetResponsedefault', 'json');
     }
 }

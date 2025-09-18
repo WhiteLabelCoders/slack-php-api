@@ -22,9 +22,9 @@ class DndTeamInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implem
      *
      * @param array $queryParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `dnd:read`
-     *     @var string $users Comma-separated list of users to fetch Do Not Disturb status for
-     * }
+     * @var string $token Authentication token. Requires scope: `dnd:read`
+     * @var string $users Comma-separated list of users to fetch Do Not Disturb status for
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -69,16 +69,16 @@ class DndTeamInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implem
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\DndTeamInfoGetResponse200|\JoliCode\Slack\Api\Model\DndTeamInfoGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DndTeamInfoGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DndTeamInfoGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DndTeamInfoGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DndTeamInfoGetResponsedefault', 'json');
     }
 }

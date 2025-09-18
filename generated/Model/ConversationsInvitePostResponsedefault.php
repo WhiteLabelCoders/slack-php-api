@@ -16,6 +16,10 @@ namespace JoliCode\Slack\Api\Model;
 class ConversationsInvitePostResponsedefault
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * Note: PHP callstack is only visible in dev/qa.
      *
      * @var string|null
@@ -26,7 +30,7 @@ class ConversationsInvitePostResponsedefault
      */
     protected $error;
     /**
-     * @var ConversationsInvitePostResponsedefaultErrorsItem[]|null
+     * @var list<ConversationsInvitePostResponsedefaultErrorsItem>|null
      */
     protected $errors;
     /**
@@ -42,6 +46,11 @@ class ConversationsInvitePostResponsedefault
      */
     protected $provided;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
      * Note: PHP callstack is only visible in dev/qa.
      */
@@ -55,6 +64,7 @@ class ConversationsInvitePostResponsedefault
      */
     public function setCallstack(?string $callstack): self
     {
+        $this->initialized['callstack'] = true;
         $this->callstack = $callstack;
 
         return $this;
@@ -67,13 +77,14 @@ class ConversationsInvitePostResponsedefault
 
     public function setError(?string $error): self
     {
+        $this->initialized['error'] = true;
         $this->error = $error;
 
         return $this;
     }
 
     /**
-     * @return ConversationsInvitePostResponsedefaultErrorsItem[]|null
+     * @return list<ConversationsInvitePostResponsedefaultErrorsItem>|null
      */
     public function getErrors(): ?array
     {
@@ -81,10 +92,11 @@ class ConversationsInvitePostResponsedefault
     }
 
     /**
-     * @param ConversationsInvitePostResponsedefaultErrorsItem[]|null $errors
+     * @param list<ConversationsInvitePostResponsedefaultErrorsItem>|null $errors
      */
     public function setErrors(?array $errors): self
     {
+        $this->initialized['errors'] = true;
         $this->errors = $errors;
 
         return $this;
@@ -97,6 +109,7 @@ class ConversationsInvitePostResponsedefault
 
     public function setNeeded(?string $needed): self
     {
+        $this->initialized['needed'] = true;
         $this->needed = $needed;
 
         return $this;
@@ -109,6 +122,7 @@ class ConversationsInvitePostResponsedefault
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
@@ -121,6 +135,7 @@ class ConversationsInvitePostResponsedefault
 
     public function setProvided(?string $provided): self
     {
+        $this->initialized['provided'] = true;
         $this->provided = $provided;
 
         return $this;

@@ -22,15 +22,15 @@ class AdminUsersSessionReset extends \JoliCode\Slack\Api\Runtime\Client\BaseEndp
      *
      * @param array $formParameters {
      *
-     *     @var bool $mobile_only Only expire mobile sessions (default: false)
-     *     @var string $user_id The ID of the user to wipe sessions for
-     *     @var bool $web_only Only expire web sessions (default: false)
-     * }
+     * @var bool   $mobile_only Only expire mobile sessions (default: false)
+     * @var string $user_id The ID of the user to wipe sessions for
+     * @var bool   $web_only Only expire web sessions (default: false)
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.users:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.users:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -88,16 +88,16 @@ class AdminUsersSessionReset extends \JoliCode\Slack\Api\Runtime\Client\BaseEndp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsersSessionResetPostResponse200|\JoliCode\Slack\Api\Model\AdminUsersSessionResetPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersSessionResetPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersSessionResetPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersSessionResetPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersSessionResetPostResponsedefault', 'json');
     }
 }

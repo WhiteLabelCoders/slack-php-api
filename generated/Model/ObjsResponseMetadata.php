@@ -16,7 +16,11 @@ namespace JoliCode\Slack\Api\Model;
 class ObjsResponseMetadata
 {
     /**
-     * @var string[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<string>|null
      */
     protected $messages;
     /**
@@ -24,12 +28,17 @@ class ObjsResponseMetadata
      */
     protected $nextCursor;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $warnings;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getMessages(): ?array
     {
@@ -37,10 +46,11 @@ class ObjsResponseMetadata
     }
 
     /**
-     * @param string[]|null $messages
+     * @param list<string>|null $messages
      */
     public function setMessages(?array $messages): self
     {
+        $this->initialized['messages'] = true;
         $this->messages = $messages;
 
         return $this;
@@ -53,13 +63,14 @@ class ObjsResponseMetadata
 
     public function setNextCursor(?string $nextCursor): self
     {
+        $this->initialized['nextCursor'] = true;
         $this->nextCursor = $nextCursor;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getWarnings(): ?array
     {
@@ -67,10 +78,11 @@ class ObjsResponseMetadata
     }
 
     /**
-     * @param string[]|null $warnings
+     * @param list<string>|null $warnings
      */
     public function setWarnings(?array $warnings): self
     {
+        $this->initialized['warnings'] = true;
         $this->warnings = $warnings;
 
         return $this;

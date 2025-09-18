@@ -16,16 +16,25 @@ namespace JoliCode\Slack\Api\Model;
 class AdminConversationsGetConversationPrefsGetResponse200PrefsCanThread
 {
     /**
-     * @var string[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<string>|null
      */
     protected $type;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $user;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getType(): ?array
     {
@@ -33,17 +42,18 @@ class AdminConversationsGetConversationPrefsGetResponse200PrefsCanThread
     }
 
     /**
-     * @param string[]|null $type
+     * @param list<string>|null $type
      */
     public function setType(?array $type): self
     {
+        $this->initialized['type'] = true;
         $this->type = $type;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getUser(): ?array
     {
@@ -51,10 +61,11 @@ class AdminConversationsGetConversationPrefsGetResponse200PrefsCanThread
     }
 
     /**
-     * @param string[]|null $user
+     * @param list<string>|null $user
      */
     public function setUser(?array $user): self
     {
+        $this->initialized['user'] = true;
         $this->user = $user;
 
         return $this;

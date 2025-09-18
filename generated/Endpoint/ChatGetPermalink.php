@@ -22,10 +22,10 @@ class ChatGetPermalink extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
      *
      * @param array $queryParameters {
      *
-     *     @var string $channel The ID of the conversation or channel containing the message
-     *     @var string $message_ts A message's `ts` value, uniquely identifying it within a channel
-     *     @var string $token Authentication token. Requires scope: `none`
-     * }
+     * @var string $channel The ID of the conversation or channel containing the message
+     * @var string $message_ts A message's `ts` value, uniquely identifying it within a channel
+     * @var string $token Authentication token. Requires scope: `none`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -71,16 +71,16 @@ class ChatGetPermalink extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\ChatGetPermalinkGetResponse200|\JoliCode\Slack\Api\Model\ChatGetPermalinkGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ChatGetPermalinkGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ChatGetPermalinkGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ChatGetPermalinkGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ChatGetPermalinkGetResponsedefault', 'json');
     }
 }

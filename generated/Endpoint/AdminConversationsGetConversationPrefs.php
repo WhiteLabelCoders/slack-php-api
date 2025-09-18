@@ -22,13 +22,13 @@ class AdminConversationsGetConversationPrefs extends \JoliCode\Slack\Api\Runtime
      *
      * @param array $queryParameters {
      *
-     *     @var string $channel_id The channel to get preferences for.
-     * }
+     * @var string $channel_id The channel to get preferences for.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:read`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.conversations:read`
+     *             }
      */
     public function __construct(array $queryParameters = [], array $headerParameters = [])
     {
@@ -84,16 +84,16 @@ class AdminConversationsGetConversationPrefs extends \JoliCode\Slack\Api\Runtime
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsGetConversationPrefsGetResponse200|\JoliCode\Slack\Api\Model\AdminConversationsGetConversationPrefsGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsGetConversationPrefsGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsGetConversationPrefsGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsGetConversationPrefsGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsGetConversationPrefsGetResponsedefault', 'json');
     }
 }

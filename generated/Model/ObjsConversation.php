@@ -16,11 +16,15 @@ namespace JoliCode\Slack\Api\Model;
 class ObjsConversation
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var string|null
      */
     protected $acceptedUser;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $connectedTeamIds;
     /**
@@ -52,7 +56,7 @@ class ObjsConversation
      */
     protected $id;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $internalTeamIds;
     /**
@@ -160,7 +164,7 @@ class ObjsConversation
      */
     protected $locale;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $members;
     /**
@@ -180,11 +184,11 @@ class ObjsConversation
      */
     protected $parentConversation;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $pendingConnectedTeamIds;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $pendingShared;
     /**
@@ -192,7 +196,7 @@ class ObjsConversation
      */
     protected $pinCount;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $previousNames;
     /**
@@ -204,11 +208,11 @@ class ObjsConversation
      */
     protected $purpose;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $sharedTeamIds;
     /**
-     * @var ObjsConversationSharesItem[]|null
+     * @var list<ObjsConversationSharesItem>|null
      */
     protected $shares;
     /**
@@ -244,6 +248,11 @@ class ObjsConversation
      */
     protected $version;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     public function getAcceptedUser(): ?string
     {
         return $this->acceptedUser;
@@ -251,13 +260,14 @@ class ObjsConversation
 
     public function setAcceptedUser(?string $acceptedUser): self
     {
+        $this->initialized['acceptedUser'] = true;
         $this->acceptedUser = $acceptedUser;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getConnectedTeamIds(): ?array
     {
@@ -265,10 +275,11 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $connectedTeamIds
+     * @param list<string>|null $connectedTeamIds
      */
     public function setConnectedTeamIds(?array $connectedTeamIds): self
     {
+        $this->initialized['connectedTeamIds'] = true;
         $this->connectedTeamIds = $connectedTeamIds;
 
         return $this;
@@ -281,6 +292,7 @@ class ObjsConversation
 
     public function setConversationHostId(?string $conversationHostId): self
     {
+        $this->initialized['conversationHostId'] = true;
         $this->conversationHostId = $conversationHostId;
 
         return $this;
@@ -293,6 +305,7 @@ class ObjsConversation
 
     public function setCreated(?int $created): self
     {
+        $this->initialized['created'] = true;
         $this->created = $created;
 
         return $this;
@@ -305,6 +318,7 @@ class ObjsConversation
 
     public function setCreator(?string $creator): self
     {
+        $this->initialized['creator'] = true;
         $this->creator = $creator;
 
         return $this;
@@ -317,6 +331,7 @@ class ObjsConversation
 
     public function setDisplayCounts(?ObjsConversationDisplayCounts $displayCounts): self
     {
+        $this->initialized['displayCounts'] = true;
         $this->displayCounts = $displayCounts;
 
         return $this;
@@ -329,6 +344,7 @@ class ObjsConversation
 
     public function setEnterpriseId(?string $enterpriseId): self
     {
+        $this->initialized['enterpriseId'] = true;
         $this->enterpriseId = $enterpriseId;
 
         return $this;
@@ -341,6 +357,7 @@ class ObjsConversation
 
     public function setHasPins(?bool $hasPins): self
     {
+        $this->initialized['hasPins'] = true;
         $this->hasPins = $hasPins;
 
         return $this;
@@ -353,13 +370,14 @@ class ObjsConversation
 
     public function setId(?string $id): self
     {
+        $this->initialized['id'] = true;
         $this->id = $id;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getInternalTeamIds(): ?array
     {
@@ -367,10 +385,11 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $internalTeamIds
+     * @param list<string>|null $internalTeamIds
      */
     public function setInternalTeamIds(?array $internalTeamIds): self
     {
+        $this->initialized['internalTeamIds'] = true;
         $this->internalTeamIds = $internalTeamIds;
 
         return $this;
@@ -383,6 +402,7 @@ class ObjsConversation
 
     public function setIsArchived(?bool $isArchived): self
     {
+        $this->initialized['isArchived'] = true;
         $this->isArchived = $isArchived;
 
         return $this;
@@ -395,6 +415,7 @@ class ObjsConversation
 
     public function setIsChannel(?bool $isChannel): self
     {
+        $this->initialized['isChannel'] = true;
         $this->isChannel = $isChannel;
 
         return $this;
@@ -407,6 +428,7 @@ class ObjsConversation
 
     public function setIsExtShared(?bool $isExtShared): self
     {
+        $this->initialized['isExtShared'] = true;
         $this->isExtShared = $isExtShared;
 
         return $this;
@@ -419,6 +441,7 @@ class ObjsConversation
 
     public function setIsFrozen(?bool $isFrozen): self
     {
+        $this->initialized['isFrozen'] = true;
         $this->isFrozen = $isFrozen;
 
         return $this;
@@ -431,6 +454,7 @@ class ObjsConversation
 
     public function setIsGeneral(?bool $isGeneral): self
     {
+        $this->initialized['isGeneral'] = true;
         $this->isGeneral = $isGeneral;
 
         return $this;
@@ -443,6 +467,7 @@ class ObjsConversation
 
     public function setIsGlobalShared(?bool $isGlobalShared): self
     {
+        $this->initialized['isGlobalShared'] = true;
         $this->isGlobalShared = $isGlobalShared;
 
         return $this;
@@ -455,6 +480,7 @@ class ObjsConversation
 
     public function setIsGroup(?bool $isGroup): self
     {
+        $this->initialized['isGroup'] = true;
         $this->isGroup = $isGroup;
 
         return $this;
@@ -467,6 +493,7 @@ class ObjsConversation
 
     public function setIsIm(?bool $isIm): self
     {
+        $this->initialized['isIm'] = true;
         $this->isIm = $isIm;
 
         return $this;
@@ -479,6 +506,7 @@ class ObjsConversation
 
     public function setIsMember(?bool $isMember): self
     {
+        $this->initialized['isMember'] = true;
         $this->isMember = $isMember;
 
         return $this;
@@ -491,6 +519,7 @@ class ObjsConversation
 
     public function setIsMoved(?int $isMoved): self
     {
+        $this->initialized['isMoved'] = true;
         $this->isMoved = $isMoved;
 
         return $this;
@@ -503,6 +532,7 @@ class ObjsConversation
 
     public function setIsMpim(?bool $isMpim): self
     {
+        $this->initialized['isMpim'] = true;
         $this->isMpim = $isMpim;
 
         return $this;
@@ -515,6 +545,7 @@ class ObjsConversation
 
     public function setIsNonThreadable(?bool $isNonThreadable): self
     {
+        $this->initialized['isNonThreadable'] = true;
         $this->isNonThreadable = $isNonThreadable;
 
         return $this;
@@ -527,6 +558,7 @@ class ObjsConversation
 
     public function setIsOpen(?bool $isOpen): self
     {
+        $this->initialized['isOpen'] = true;
         $this->isOpen = $isOpen;
 
         return $this;
@@ -539,6 +571,7 @@ class ObjsConversation
 
     public function setIsOrgDefault(?bool $isOrgDefault): self
     {
+        $this->initialized['isOrgDefault'] = true;
         $this->isOrgDefault = $isOrgDefault;
 
         return $this;
@@ -551,6 +584,7 @@ class ObjsConversation
 
     public function setIsOrgMandatory(?bool $isOrgMandatory): self
     {
+        $this->initialized['isOrgMandatory'] = true;
         $this->isOrgMandatory = $isOrgMandatory;
 
         return $this;
@@ -563,6 +597,7 @@ class ObjsConversation
 
     public function setIsOrgShared(?bool $isOrgShared): self
     {
+        $this->initialized['isOrgShared'] = true;
         $this->isOrgShared = $isOrgShared;
 
         return $this;
@@ -575,6 +610,7 @@ class ObjsConversation
 
     public function setIsPendingExtShared(?bool $isPendingExtShared): self
     {
+        $this->initialized['isPendingExtShared'] = true;
         $this->isPendingExtShared = $isPendingExtShared;
 
         return $this;
@@ -587,6 +623,7 @@ class ObjsConversation
 
     public function setIsPrivate(?bool $isPrivate): self
     {
+        $this->initialized['isPrivate'] = true;
         $this->isPrivate = $isPrivate;
 
         return $this;
@@ -599,6 +636,7 @@ class ObjsConversation
 
     public function setIsReadOnly(?bool $isReadOnly): self
     {
+        $this->initialized['isReadOnly'] = true;
         $this->isReadOnly = $isReadOnly;
 
         return $this;
@@ -611,6 +649,7 @@ class ObjsConversation
 
     public function setIsShared(?bool $isShared): self
     {
+        $this->initialized['isShared'] = true;
         $this->isShared = $isShared;
 
         return $this;
@@ -623,6 +662,7 @@ class ObjsConversation
 
     public function setIsStarred(?bool $isStarred): self
     {
+        $this->initialized['isStarred'] = true;
         $this->isStarred = $isStarred;
 
         return $this;
@@ -635,6 +675,7 @@ class ObjsConversation
 
     public function setIsThreadOnly(?bool $isThreadOnly): self
     {
+        $this->initialized['isThreadOnly'] = true;
         $this->isThreadOnly = $isThreadOnly;
 
         return $this;
@@ -647,6 +688,7 @@ class ObjsConversation
 
     public function setIsUserDeleted(?bool $isUserDeleted): self
     {
+        $this->initialized['isUserDeleted'] = true;
         $this->isUserDeleted = $isUserDeleted;
 
         return $this;
@@ -659,24 +701,20 @@ class ObjsConversation
 
     public function setLastRead(?string $lastRead): self
     {
+        $this->initialized['lastRead'] = true;
         $this->lastRead = $lastRead;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getLatest()
     {
         return $this->latest;
     }
 
-    /**
-     * @param mixed $latest
-     */
     public function setLatest($latest): self
     {
+        $this->initialized['latest'] = true;
         $this->latest = $latest;
 
         return $this;
@@ -689,13 +727,14 @@ class ObjsConversation
 
     public function setLocale(?string $locale): self
     {
+        $this->initialized['locale'] = true;
         $this->locale = $locale;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getMembers(): ?array
     {
@@ -703,10 +742,11 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $members
+     * @param list<string>|null $members
      */
     public function setMembers(?array $members): self
     {
+        $this->initialized['members'] = true;
         $this->members = $members;
 
         return $this;
@@ -719,6 +759,7 @@ class ObjsConversation
 
     public function setName(?string $name): self
     {
+        $this->initialized['name'] = true;
         $this->name = $name;
 
         return $this;
@@ -731,6 +772,7 @@ class ObjsConversation
 
     public function setNameNormalized(?string $nameNormalized): self
     {
+        $this->initialized['nameNormalized'] = true;
         $this->nameNormalized = $nameNormalized;
 
         return $this;
@@ -743,31 +785,27 @@ class ObjsConversation
 
     public function setNumMembers(?int $numMembers): self
     {
+        $this->initialized['numMembers'] = true;
         $this->numMembers = $numMembers;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getParentConversation()
     {
         return $this->parentConversation;
     }
 
-    /**
-     * @param mixed $parentConversation
-     */
     public function setParentConversation($parentConversation): self
     {
+        $this->initialized['parentConversation'] = true;
         $this->parentConversation = $parentConversation;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getPendingConnectedTeamIds(): ?array
     {
@@ -775,17 +813,18 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $pendingConnectedTeamIds
+     * @param list<string>|null $pendingConnectedTeamIds
      */
     public function setPendingConnectedTeamIds(?array $pendingConnectedTeamIds): self
     {
+        $this->initialized['pendingConnectedTeamIds'] = true;
         $this->pendingConnectedTeamIds = $pendingConnectedTeamIds;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getPendingShared(): ?array
     {
@@ -793,10 +832,11 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $pendingShared
+     * @param list<string>|null $pendingShared
      */
     public function setPendingShared(?array $pendingShared): self
     {
+        $this->initialized['pendingShared'] = true;
         $this->pendingShared = $pendingShared;
 
         return $this;
@@ -809,13 +849,14 @@ class ObjsConversation
 
     public function setPinCount(?int $pinCount): self
     {
+        $this->initialized['pinCount'] = true;
         $this->pinCount = $pinCount;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getPreviousNames(): ?array
     {
@@ -823,10 +864,11 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $previousNames
+     * @param list<string>|null $previousNames
      */
     public function setPreviousNames(?array $previousNames): self
     {
+        $this->initialized['previousNames'] = true;
         $this->previousNames = $previousNames;
 
         return $this;
@@ -839,6 +881,7 @@ class ObjsConversation
 
     public function setPriority(?float $priority): self
     {
+        $this->initialized['priority'] = true;
         $this->priority = $priority;
 
         return $this;
@@ -851,13 +894,14 @@ class ObjsConversation
 
     public function setPurpose(?ObjsConversationPurpose $purpose): self
     {
+        $this->initialized['purpose'] = true;
         $this->purpose = $purpose;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getSharedTeamIds(): ?array
     {
@@ -865,17 +909,18 @@ class ObjsConversation
     }
 
     /**
-     * @param string[]|null $sharedTeamIds
+     * @param list<string>|null $sharedTeamIds
      */
     public function setSharedTeamIds(?array $sharedTeamIds): self
     {
+        $this->initialized['sharedTeamIds'] = true;
         $this->sharedTeamIds = $sharedTeamIds;
 
         return $this;
     }
 
     /**
-     * @return ObjsConversationSharesItem[]|null
+     * @return list<ObjsConversationSharesItem>|null
      */
     public function getShares(): ?array
     {
@@ -883,10 +928,11 @@ class ObjsConversation
     }
 
     /**
-     * @param ObjsConversationSharesItem[]|null $shares
+     * @param list<ObjsConversationSharesItem>|null $shares
      */
     public function setShares(?array $shares): self
     {
+        $this->initialized['shares'] = true;
         $this->shares = $shares;
 
         return $this;
@@ -899,6 +945,7 @@ class ObjsConversation
 
     public function setTimezoneCount(?int $timezoneCount): self
     {
+        $this->initialized['timezoneCount'] = true;
         $this->timezoneCount = $timezoneCount;
 
         return $this;
@@ -911,6 +958,7 @@ class ObjsConversation
 
     public function setTopic(?ObjsConversationTopic $topic): self
     {
+        $this->initialized['topic'] = true;
         $this->topic = $topic;
 
         return $this;
@@ -923,6 +971,7 @@ class ObjsConversation
 
     public function setUnlinked(?int $unlinked): self
     {
+        $this->initialized['unlinked'] = true;
         $this->unlinked = $unlinked;
 
         return $this;
@@ -935,6 +984,7 @@ class ObjsConversation
 
     public function setUnreadCount(?int $unreadCount): self
     {
+        $this->initialized['unreadCount'] = true;
         $this->unreadCount = $unreadCount;
 
         return $this;
@@ -947,6 +997,7 @@ class ObjsConversation
 
     public function setUnreadCountDisplay(?int $unreadCountDisplay): self
     {
+        $this->initialized['unreadCountDisplay'] = true;
         $this->unreadCountDisplay = $unreadCountDisplay;
 
         return $this;
@@ -959,6 +1010,7 @@ class ObjsConversation
 
     public function setUseCase(?string $useCase): self
     {
+        $this->initialized['useCase'] = true;
         $this->useCase = $useCase;
 
         return $this;
@@ -971,6 +1023,7 @@ class ObjsConversation
 
     public function setUser(?string $user): self
     {
+        $this->initialized['user'] = true;
         $this->user = $user;
 
         return $this;
@@ -983,6 +1036,7 @@ class ObjsConversation
 
     public function setVersion(?int $version): self
     {
+        $this->initialized['version'] = true;
         $this->version = $version;
 
         return $this;

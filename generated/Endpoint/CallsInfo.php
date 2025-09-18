@@ -22,13 +22,13 @@ class CallsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
      *
      * @param array $queryParameters {
      *
-     *     @var string $id `id` of the Call returned by the [`calls.add`](/methods/calls.add) method.
-     * }
+     * @var string $id `id` of the Call returned by the [`calls.add`](/methods/calls.add) method.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `calls:read`
-     * }
+     * @var string $token Authentication token. Requires scope: `calls:read`
+     *             }
      */
     public function __construct(array $queryParameters = [], array $headerParameters = [])
     {
@@ -84,16 +84,16 @@ class CallsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\CallsInfoGetResponse200|\JoliCode\Slack\Api\Model\CallsInfoGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsInfoGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsInfoGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsInfoGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsInfoGetResponsedefault', 'json');
     }
 }

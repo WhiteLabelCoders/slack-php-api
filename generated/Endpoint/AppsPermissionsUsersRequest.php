@@ -22,11 +22,11 @@ class AppsPermissionsUsersRequest extends \JoliCode\Slack\Api\Runtime\Client\Bas
      *
      * @param array $queryParameters {
      *
-     *     @var string $scopes A comma separated list of user scopes to request for
-     *     @var string $token Authentication token. Requires scope: `none`
-     *     @var string $trigger_id Token used to trigger the request
-     *     @var string $user The user this scope is being requested for
-     * }
+     * @var string $scopes A comma separated list of user scopes to request for
+     * @var string $token Authentication token. Requires scope: `none`
+     * @var string $trigger_id Token used to trigger the request
+     * @var string $user The user this scope is being requested for
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -73,16 +73,16 @@ class AppsPermissionsUsersRequest extends \JoliCode\Slack\Api\Runtime\Client\Bas
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AppsPermissionsUsersRequestGetResponse200|\JoliCode\Slack\Api\Model\AppsPermissionsUsersRequestGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AppsPermissionsUsersRequestGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AppsPermissionsUsersRequestGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AppsPermissionsUsersRequestGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AppsPermissionsUsersRequestGetResponsedefault', 'json');
     }
 }

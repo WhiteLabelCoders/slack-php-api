@@ -22,14 +22,14 @@ class DialogOpen extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint impleme
      *
      * @param array $queryParameters {
      *
-     *     @var string $dialog The dialog definition. This must be a JSON-encoded string.
-     *     @var string $trigger_id Exchange a trigger to post to the user.
-     * }
+     * @var string $dialog The dialog definition. This must be a JSON-encoded string.
+     * @var string $trigger_id Exchange a trigger to post to the user.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `none`
-     * }
+     * @var string $token Authentication token. Requires scope: `none`
+     *             }
      */
     public function __construct(array $queryParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class DialogOpen extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint impleme
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\DialogOpenGetResponse200|\JoliCode\Slack\Api\Model\DialogOpenGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DialogOpenGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DialogOpenGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DialogOpenGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DialogOpenGetResponsedefault', 'json');
     }
 }

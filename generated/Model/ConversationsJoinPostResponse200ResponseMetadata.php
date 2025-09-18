@@ -16,12 +16,21 @@ namespace JoliCode\Slack\Api\Model;
 class ConversationsJoinPostResponse200ResponseMetadata
 {
     /**
-     * @var string[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<string>|null
      */
     protected $warnings;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getWarnings(): ?array
     {
@@ -29,10 +38,11 @@ class ConversationsJoinPostResponse200ResponseMetadata
     }
 
     /**
-     * @param string[]|null $warnings
+     * @param list<string>|null $warnings
      */
     public function setWarnings(?array $warnings): self
     {
+        $this->initialized['warnings'] = true;
         $this->warnings = $warnings;
 
         return $this;

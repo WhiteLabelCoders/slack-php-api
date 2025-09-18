@@ -22,12 +22,12 @@ class AdminConversationsEkmListOriginalConnectedChannelInfo extends \JoliCode\Sl
      *
      * @param array $queryParameters {
      *
-     *     @var string $channel_ids a comma-separated list of channels to filter to
-     *     @var string $cursor set `cursor` to `next_cursor` returned by the previous call to list items in the next page
-     *     @var int $limit The maximum number of items to return. Must be between 1 - 1000 both inclusive.
-     *     @var string $team_ids a comma-separated list of the workspaces to which the channels you would like returned belong
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:read`
-     * }
+     * @var string $channel_ids a comma-separated list of channels to filter to
+     * @var string $cursor set `cursor` to `next_cursor` returned by the previous call to list items in the next page
+     * @var int    $limit The maximum number of items to return. Must be between 1 - 1000 both inclusive.
+     * @var string $team_ids a comma-separated list of the workspaces to which the channels you would like returned belong
+     * @var string $token Authentication token. Requires scope: `admin.conversations:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -75,16 +75,16 @@ class AdminConversationsEkmListOriginalConnectedChannelInfo extends \JoliCode\Sl
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponse200|\JoliCode\Slack\Api\Model\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsEkmListOriginalConnectedChannelInfoGetResponsedefault', 'json');
     }
 }

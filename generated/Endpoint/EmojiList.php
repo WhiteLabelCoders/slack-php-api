@@ -22,8 +22,8 @@ class EmojiList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
      *
      * @param array $queryParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `emoji:read`
-     * }
+     * @var string $token Authentication token. Requires scope: `emoji:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -67,16 +67,16 @@ class EmojiList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\EmojiListGetResponse200|\JoliCode\Slack\Api\Model\EmojiListGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\EmojiListGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\EmojiListGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\EmojiListGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\EmojiListGetResponsedefault', 'json');
     }
 }

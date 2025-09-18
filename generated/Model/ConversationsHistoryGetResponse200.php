@@ -16,6 +16,10 @@ namespace JoliCode\Slack\Api\Model;
 class ConversationsHistoryGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var int|null
      */
     protected $channelActionsCount;
@@ -28,7 +32,7 @@ class ConversationsHistoryGetResponse200
      */
     protected $hasMore;
     /**
-     * @var ObjsMessage[]|null
+     * @var list<ObjsMessage>|null
      */
     protected $messages;
     /**
@@ -44,6 +48,11 @@ class ConversationsHistoryGetResponse200
      */
     protected $responseMetadata;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     public function getChannelActionsCount(): ?int
     {
         return $this->channelActionsCount;
@@ -51,24 +60,20 @@ class ConversationsHistoryGetResponse200
 
     public function setChannelActionsCount(?int $channelActionsCount): self
     {
+        $this->initialized['channelActionsCount'] = true;
         $this->channelActionsCount = $channelActionsCount;
 
         return $this;
     }
 
-    /**
-     * @return mixed
-     */
     public function getChannelActionsTs()
     {
         return $this->channelActionsTs;
     }
 
-    /**
-     * @param mixed $channelActionsTs
-     */
     public function setChannelActionsTs($channelActionsTs): self
     {
+        $this->initialized['channelActionsTs'] = true;
         $this->channelActionsTs = $channelActionsTs;
 
         return $this;
@@ -81,13 +86,14 @@ class ConversationsHistoryGetResponse200
 
     public function setHasMore(?bool $hasMore): self
     {
+        $this->initialized['hasMore'] = true;
         $this->hasMore = $hasMore;
 
         return $this;
     }
 
     /**
-     * @return ObjsMessage[]|null
+     * @return list<ObjsMessage>|null
      */
     public function getMessages(): ?array
     {
@@ -95,10 +101,11 @@ class ConversationsHistoryGetResponse200
     }
 
     /**
-     * @param ObjsMessage[]|null $messages
+     * @param list<ObjsMessage>|null $messages
      */
     public function setMessages(?array $messages): self
     {
+        $this->initialized['messages'] = true;
         $this->messages = $messages;
 
         return $this;
@@ -111,6 +118,7 @@ class ConversationsHistoryGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
@@ -123,6 +131,7 @@ class ConversationsHistoryGetResponse200
 
     public function setPinCount(?int $pinCount): self
     {
+        $this->initialized['pinCount'] = true;
         $this->pinCount = $pinCount;
 
         return $this;
@@ -135,6 +144,7 @@ class ConversationsHistoryGetResponse200
 
     public function setResponseMetadata(?ConversationsHistoryGetResponse200ResponseMetadata $responseMetadata): self
     {
+        $this->initialized['responseMetadata'] = true;
         $this->responseMetadata = $responseMetadata;
 
         return $this;

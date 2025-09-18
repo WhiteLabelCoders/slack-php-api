@@ -16,13 +16,22 @@ namespace JoliCode\Slack\Api\Model;
 class UsergroupsListGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var bool|null
      */
     protected $ok;
     /**
-     * @var ObjsSubteam[]|null
+     * @var list<ObjsSubteam>|null
      */
     protected $usergroups;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getOk(): ?bool
     {
@@ -31,13 +40,14 @@ class UsergroupsListGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
     }
 
     /**
-     * @return ObjsSubteam[]|null
+     * @return list<ObjsSubteam>|null
      */
     public function getUsergroups(): ?array
     {
@@ -45,10 +55,11 @@ class UsergroupsListGetResponse200
     }
 
     /**
-     * @param ObjsSubteam[]|null $usergroups
+     * @param list<ObjsSubteam>|null $usergroups
      */
     public function setUsergroups(?array $usergroups): self
     {
+        $this->initialized['usergroups'] = true;
         $this->usergroups = $usergroups;
 
         return $this;

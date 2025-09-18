@@ -16,16 +16,25 @@ namespace JoliCode\Slack\Api\Model;
 class ObjsSubteamPrefs
 {
     /**
-     * @var string[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<string>|null
      */
     protected $channels;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $groups;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getChannels(): ?array
     {
@@ -33,17 +42,18 @@ class ObjsSubteamPrefs
     }
 
     /**
-     * @param string[]|null $channels
+     * @param list<string>|null $channels
      */
     public function setChannels(?array $channels): self
     {
+        $this->initialized['channels'] = true;
         $this->channels = $channels;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getGroups(): ?array
     {
@@ -51,10 +61,11 @@ class ObjsSubteamPrefs
     }
 
     /**
-     * @param string[]|null $groups
+     * @param list<string>|null $groups
      */
     public function setGroups(?array $groups): self
     {
+        $this->initialized['groups'] = true;
         $this->groups = $groups;
 
         return $this;
