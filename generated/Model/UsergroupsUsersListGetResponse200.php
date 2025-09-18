@@ -16,13 +16,22 @@ namespace JoliCode\Slack\Api\Model;
 class UsergroupsUsersListGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var bool|null
      */
     protected $ok;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $users;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getOk(): ?bool
     {
@@ -31,13 +40,14 @@ class UsergroupsUsersListGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getUsers(): ?array
     {
@@ -45,10 +55,11 @@ class UsergroupsUsersListGetResponse200
     }
 
     /**
-     * @param string[]|null $users
+     * @param list<string>|null $users
      */
     public function setUsers(?array $users): self
     {
+        $this->initialized['users'] = true;
         $this->users = $users;
 
         return $this;

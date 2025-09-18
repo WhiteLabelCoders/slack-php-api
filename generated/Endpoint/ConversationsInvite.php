@@ -22,14 +22,14 @@ class ConversationsInvite extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoin
      *
      * @param array $formParameters {
      *
-     *     @var string $channel the ID of the public or private channel to invite user(s) to
-     *     @var string $users A comma separated list of user IDs. Up to 1000 users may be listed.
-     * }
+     * @var string $channel the ID of the public or private channel to invite user(s) to
+     * @var string $users A comma separated list of user IDs. Up to 1000 users may be listed.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `conversations:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `conversations:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class ConversationsInvite extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoin
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\ConversationsInvitePostResponse200|\JoliCode\Slack\Api\Model\ConversationsInvitePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ConversationsInvitePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ConversationsInvitePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ConversationsInvitePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ConversationsInvitePostResponsedefault', 'json');
     }
 }

@@ -16,13 +16,22 @@ namespace JoliCode\Slack\Api\Model;
 class RemindersListGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var bool|null
      */
     protected $ok;
     /**
-     * @var ObjsReminder[]|null
+     * @var list<ObjsReminder>|null
      */
     protected $reminders;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getOk(): ?bool
     {
@@ -31,13 +40,14 @@ class RemindersListGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
     }
 
     /**
-     * @return ObjsReminder[]|null
+     * @return list<ObjsReminder>|null
      */
     public function getReminders(): ?array
     {
@@ -45,10 +55,11 @@ class RemindersListGetResponse200
     }
 
     /**
-     * @param ObjsReminder[]|null $reminders
+     * @param list<ObjsReminder>|null $reminders
      */
     public function setReminders(?array $reminders): self
     {
+        $this->initialized['reminders'] = true;
         $this->reminders = $reminders;
 
         return $this;

@@ -22,14 +22,14 @@ class AdminConversationsSetConversationPrefs extends \JoliCode\Slack\Api\Runtime
      *
      * @param array $formParameters {
      *
-     *     @var string $channel_id The channel to set the prefs for
-     *     @var string $prefs The prefs for this channel in a stringified JSON format.
-     * }
+     * @var string $channel_id The channel to set the prefs for
+     * @var string $prefs The prefs for this channel in a stringified JSON format.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.conversations:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminConversationsSetConversationPrefs extends \JoliCode\Slack\Api\Runtime
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsSetConversationPrefsPostResponse200|\JoliCode\Slack\Api\Model\AdminConversationsSetConversationPrefsPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsSetConversationPrefsPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsSetConversationPrefsPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsSetConversationPrefsPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsSetConversationPrefsPostResponsedefault', 'json');
     }
 }

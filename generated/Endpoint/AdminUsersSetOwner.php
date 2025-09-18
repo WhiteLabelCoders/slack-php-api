@@ -22,14 +22,14 @@ class AdminUsersSetOwner extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint
      *
      * @param array $formParameters {
      *
-     *     @var string $team_id the ID (`T1234`) of the workspace
-     *     @var string $user_id Id of the user to promote to owner.
-     * }
+     * @var string $team_id the ID (`T1234`) of the workspace
+     * @var string $user_id Id of the user to promote to owner.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.users:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.users:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminUsersSetOwner extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsersSetOwnerPostResponse200|\JoliCode\Slack\Api\Model\AdminUsersSetOwnerPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersSetOwnerPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersSetOwnerPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersSetOwnerPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersSetOwnerPostResponsedefault', 'json');
     }
 }

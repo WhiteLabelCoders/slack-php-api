@@ -22,14 +22,14 @@ class AdminUsergroupsRemoveChannels extends \JoliCode\Slack\Api\Runtime\Client\B
      *
      * @param array $formParameters {
      *
-     *     @var string $channel_ids Comma-separated string of channel IDs
-     *     @var string $usergroup_id ID of the IDP Group
-     * }
+     * @var string $channel_ids Comma-separated string of channel IDs
+     * @var string $usergroup_id ID of the IDP Group
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.usergroups:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.usergroups:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminUsergroupsRemoveChannels extends \JoliCode\Slack\Api\Runtime\Client\B
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsergroupsRemoveChannelsPostResponse200|\JoliCode\Slack\Api\Model\AdminUsergroupsRemoveChannelsPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsRemoveChannelsPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsRemoveChannelsPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsergroupsRemoveChannelsPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsergroupsRemoveChannelsPostResponsedefault', 'json');
     }
 }

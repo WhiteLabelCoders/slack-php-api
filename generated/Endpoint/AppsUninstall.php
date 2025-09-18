@@ -22,10 +22,10 @@ class AppsUninstall extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint impl
      *
      * @param array $queryParameters {
      *
-     *     @var string $client_id issued when you created your application
-     *     @var string $client_secret issued when you created your application
-     *     @var string $token Authentication token. Requires scope: `none`
-     * }
+     * @var string $client_id issued when you created your application
+     * @var string $client_secret issued when you created your application
+     * @var string $token Authentication token. Requires scope: `none`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -71,16 +71,16 @@ class AppsUninstall extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint impl
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AppsUninstallGetResponse200|\JoliCode\Slack\Api\Model\AppsUninstallGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AppsUninstallGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AppsUninstallGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AppsUninstallGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AppsUninstallGetResponsedefault', 'json');
     }
 }

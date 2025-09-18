@@ -16,36 +16,45 @@ namespace JoliCode\Slack\Api\Model;
 class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
 {
     /**
-     * @var string[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<string>|null
      */
     protected $appHome;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $channel;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $group;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $im;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $mpim;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $team;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $user;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getAppHome(): ?array
     {
@@ -53,17 +62,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $appHome
+     * @param list<string>|null $appHome
      */
     public function setAppHome(?array $appHome): self
     {
+        $this->initialized['appHome'] = true;
         $this->appHome = $appHome;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getChannel(): ?array
     {
@@ -71,17 +81,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $channel
+     * @param list<string>|null $channel
      */
     public function setChannel(?array $channel): self
     {
+        $this->initialized['channel'] = true;
         $this->channel = $channel;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getGroup(): ?array
     {
@@ -89,17 +100,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $group
+     * @param list<string>|null $group
      */
     public function setGroup(?array $group): self
     {
+        $this->initialized['group'] = true;
         $this->group = $group;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getIm(): ?array
     {
@@ -107,17 +119,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $im
+     * @param list<string>|null $im
      */
     public function setIm(?array $im): self
     {
+        $this->initialized['im'] = true;
         $this->im = $im;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getMpim(): ?array
     {
@@ -125,17 +138,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $mpim
+     * @param list<string>|null $mpim
      */
     public function setMpim(?array $mpim): self
     {
+        $this->initialized['mpim'] = true;
         $this->mpim = $mpim;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getTeam(): ?array
     {
@@ -143,17 +157,18 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $team
+     * @param list<string>|null $team
      */
     public function setTeam(?array $team): self
     {
+        $this->initialized['team'] = true;
         $this->team = $team;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getUser(): ?array
     {
@@ -161,10 +176,11 @@ class AppsPermissionsScopesListGetResponse200Scopes extends \ArrayObject
     }
 
     /**
-     * @param string[]|null $user
+     * @param list<string>|null $user
      */
     public function setUser(?array $user): self
     {
+        $this->initialized['user'] = true;
         $this->user = $user;
 
         return $this;

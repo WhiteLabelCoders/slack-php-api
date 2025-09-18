@@ -22,10 +22,10 @@ class AdminEmojiAddAlias extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint
      *
      * @param array $formParameters {
      *
-     *     @var string $alias_for the alias of the emoji
-     *     @var string $name The name of the emoji to be aliased. Colons (`:myemoji:`) around the value are not required, although they may be included.
-     *     @var string $token Authentication token. Requires scope: `admin.teams:write`
-     * }
+     * @var string $alias_for the alias of the emoji
+     * @var string $name The name of the emoji to be aliased. Colons (`:myemoji:`) around the value are not required, although they may be included.
+     * @var string $token Authentication token. Requires scope: `admin.teams:write`
+     *             }
      */
     public function __construct(array $formParameters = [])
     {
@@ -71,16 +71,16 @@ class AdminEmojiAddAlias extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminEmojiAddAliasPostResponse200|\JoliCode\Slack\Api\Model\AdminEmojiAddAliasPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminEmojiAddAliasPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminEmojiAddAliasPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminEmojiAddAliasPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminEmojiAddAliasPostResponsedefault', 'json');
     }
 }

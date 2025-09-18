@@ -22,16 +22,16 @@ class UsersProfileSet extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint im
      *
      * @param array $formParameters {
      *
-     *     @var string $name Name of a single key to set. Usable only if `profile` is not passed.
-     *     @var string $profile Collection of key:value pairs presented as a URL-encoded JSON hash. At most 50 fields may be set. Each field name is limited to 255 characters.
-     *     @var string $user ID of user to change. This argument may only be specified by team admins on paid teams.
-     *     @var string $value Value to set a single key to. Usable only if `profile` is not passed.
-     * }
+     * @var string $name Name of a single key to set. Usable only if `profile` is not passed.
+     * @var string $profile Collection of key:value pairs presented as a URL-encoded JSON hash. At most 50 fields may be set. Each field name is limited to 255 characters.
+     * @var string $user ID of user to change. This argument may only be specified by team admins on paid teams.
+     * @var string $value Value to set a single key to. Usable only if `profile` is not passed.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `users.profile:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `users.profile:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -90,16 +90,16 @@ class UsersProfileSet extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint im
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\UsersProfileSetPostResponse200|\JoliCode\Slack\Api\Model\UsersProfileSetPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsersProfileSetPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsersProfileSetPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsersProfileSetPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsersProfileSetPostResponsedefault', 'json');
     }
 }

@@ -22,14 +22,14 @@ class AdminTeamsSettingsSetDescription extends \JoliCode\Slack\Api\Runtime\Clien
      *
      * @param array $formParameters {
      *
-     *     @var string $description the new description for the workspace
-     *     @var string $team_id ID for the workspace to set the description for.
-     * }
+     * @var string $description the new description for the workspace
+     * @var string $team_id ID for the workspace to set the description for.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.teams:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.teams:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminTeamsSettingsSetDescription extends \JoliCode\Slack\Api\Runtime\Clien
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminTeamsSettingsSetDescriptionPostResponse200|\JoliCode\Slack\Api\Model\AdminTeamsSettingsSetDescriptionPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsSettingsSetDescriptionPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsSettingsSetDescriptionPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsSettingsSetDescriptionPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsSettingsSetDescriptionPostResponsedefault', 'json');
     }
 }

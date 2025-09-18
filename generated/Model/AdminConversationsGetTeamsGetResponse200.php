@@ -16,6 +16,10 @@ namespace JoliCode\Slack\Api\Model;
 class AdminConversationsGetTeamsGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var bool|null
      */
     protected $ok;
@@ -24,9 +28,14 @@ class AdminConversationsGetTeamsGetResponse200
      */
     protected $responseMetadata;
     /**
-     * @var string[]|null
+     * @var list<string>|null
      */
     protected $teamIds;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getOk(): ?bool
     {
@@ -35,6 +44,7 @@ class AdminConversationsGetTeamsGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
@@ -47,13 +57,14 @@ class AdminConversationsGetTeamsGetResponse200
 
     public function setResponseMetadata(?AdminConversationsGetTeamsGetResponse200ResponseMetadata $responseMetadata): self
     {
+        $this->initialized['responseMetadata'] = true;
         $this->responseMetadata = $responseMetadata;
 
         return $this;
     }
 
     /**
-     * @return string[]|null
+     * @return list<string>|null
      */
     public function getTeamIds(): ?array
     {
@@ -61,10 +72,11 @@ class AdminConversationsGetTeamsGetResponse200
     }
 
     /**
-     * @param string[]|null $teamIds
+     * @param list<string>|null $teamIds
      */
     public function setTeamIds(?array $teamIds): self
     {
+        $this->initialized['teamIds'] = true;
         $this->teamIds = $teamIds;
 
         return $this;

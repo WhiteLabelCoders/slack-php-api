@@ -16,11 +16,15 @@ namespace JoliCode\Slack\Api\Model;
 class ObjsResources
 {
     /**
-     * @var mixed[]|null
+     * @var array
+     */
+    protected $initialized = [];
+    /**
+     * @var list<mixed>|null
      */
     protected $excludedIds;
     /**
-     * @var mixed[]|null
+     * @var list<mixed>|null
      */
     protected $ids;
     /**
@@ -28,8 +32,13 @@ class ObjsResources
      */
     protected $wildcard;
 
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
+
     /**
-     * @return mixed[]|null
+     * @return list<mixed>|null
      */
     public function getExcludedIds(): ?array
     {
@@ -37,17 +46,18 @@ class ObjsResources
     }
 
     /**
-     * @param mixed[]|null $excludedIds
+     * @param list<mixed>|null $excludedIds
      */
     public function setExcludedIds(?array $excludedIds): self
     {
+        $this->initialized['excludedIds'] = true;
         $this->excludedIds = $excludedIds;
 
         return $this;
     }
 
     /**
-     * @return mixed[]|null
+     * @return list<mixed>|null
      */
     public function getIds(): ?array
     {
@@ -55,10 +65,11 @@ class ObjsResources
     }
 
     /**
-     * @param mixed[]|null $ids
+     * @param list<mixed>|null $ids
      */
     public function setIds(?array $ids): self
     {
+        $this->initialized['ids'] = true;
         $this->ids = $ids;
 
         return $this;
@@ -71,6 +82,7 @@ class ObjsResources
 
     public function setWildcard(?bool $wildcard): self
     {
+        $this->initialized['wildcard'] = true;
         $this->wildcard = $wildcard;
 
         return $this;

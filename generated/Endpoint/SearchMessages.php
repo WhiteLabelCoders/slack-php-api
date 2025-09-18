@@ -22,14 +22,14 @@ class SearchMessages extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
      *
      * @param array $queryParameters {
      *
-     *     @var int $count Pass the number of results you want per "page". Maximum of `100`.
-     *     @var bool $highlight pass a value of `true` to enable query highlight markers (see below)
-     *     @var int $page
-     *     @var string $query search query
-     *     @var string $sort return matches sorted by either `score` or `timestamp`
-     *     @var string $sort_dir change sort direction to ascending (`asc`) or descending (`desc`)
-     *     @var string $token Authentication token. Requires scope: `search:read`
-     * }
+     * @var int    $count Pass the number of results you want per "page". Maximum of `100`.
+     * @var bool   $highlight pass a value of `true` to enable query highlight markers (see below)
+     * @var int    $page
+     * @var string $query search query
+     * @var string $sort return matches sorted by either `score` or `timestamp`
+     * @var string $sort_dir change sort direction to ascending (`asc`) or descending (`desc`)
+     * @var string $token Authentication token. Requires scope: `search:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -79,16 +79,16 @@ class SearchMessages extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\SearchMessagesGetResponse200|\JoliCode\Slack\Api\Model\SearchMessagesGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\SearchMessagesGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\SearchMessagesGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\SearchMessagesGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\SearchMessagesGetResponsedefault', 'json');
     }
 }

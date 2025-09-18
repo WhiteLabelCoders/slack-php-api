@@ -22,8 +22,8 @@ class UsersDeletePhoto extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
      *
      * @param array $formParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `users.profile:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `users.profile:write`
+     *             }
      */
     public function __construct(array $formParameters = [])
     {
@@ -67,16 +67,16 @@ class UsersDeletePhoto extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\UsersDeletePhotoPostResponse200|\JoliCode\Slack\Api\Model\UsersDeletePhotoPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsersDeletePhotoPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsersDeletePhotoPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsersDeletePhotoPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsersDeletePhotoPostResponsedefault', 'json');
     }
 }

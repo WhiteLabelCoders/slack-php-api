@@ -22,13 +22,13 @@ class AdminTeamsSettingsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndp
      *
      * @param array $queryParameters {
      *
-     *     @var string $team_id
-     * }
+     * @var string $team_id
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.teams:read`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.teams:read`
+     *             }
      */
     public function __construct(array $queryParameters = [], array $headerParameters = [])
     {
@@ -84,16 +84,16 @@ class AdminTeamsSettingsInfo extends \JoliCode\Slack\Api\Runtime\Client\BaseEndp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminTeamsSettingsInfoGetResponse200|\JoliCode\Slack\Api\Model\AdminTeamsSettingsInfoGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsSettingsInfoGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsSettingsInfoGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsSettingsInfoGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsSettingsInfoGetResponsedefault', 'json');
     }
 }

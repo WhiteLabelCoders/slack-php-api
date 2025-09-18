@@ -22,15 +22,15 @@ class ChatDeleteScheduledMessage extends \JoliCode\Slack\Api\Runtime\Client\Base
      *
      * @param array $formParameters {
      *
-     *     @var bool $as_user Pass true to delete the message as the authed user with `chat:write:user` scope. [Bot users](/bot-users) in this context are considered authed users. If unused or false, the message will be deleted with `chat:write:bot` scope.
-     *     @var string $channel The channel the scheduled_message is posting to
-     *     @var string $scheduled_message_id `scheduled_message_id` returned from call to chat.scheduleMessage
-     * }
+     * @var bool   $as_user Pass true to delete the message as the authed user with `chat:write:user` scope. [Bot users](/bot-users) in this context are considered authed users. If unused or false, the message will be deleted with `chat:write:bot` scope.
+     * @var string $channel The channel the scheduled_message is posting to
+     * @var string $scheduled_message_id `scheduled_message_id` returned from call to chat.scheduleMessage
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `chat:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `chat:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -88,16 +88,16 @@ class ChatDeleteScheduledMessage extends \JoliCode\Slack\Api\Runtime\Client\Base
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\ChatDeleteScheduledMessagePostResponse200|\JoliCode\Slack\Api\Model\ChatDeleteScheduledMessagePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ChatDeleteScheduledMessagePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ChatDeleteScheduledMessagePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ChatDeleteScheduledMessagePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ChatDeleteScheduledMessagePostResponsedefault', 'json');
     }
 }

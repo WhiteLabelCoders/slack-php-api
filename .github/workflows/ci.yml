@@ -43,12 +43,13 @@ jobs:
         runs-on: ubuntu-latest
         strategy:
             fail-fast: false
+            max-parallel: 1 # Avoid rate-limit issue on Slack API
             matrix:
-                php-version: [ '7.4', '8.0', '8.1' ]
+                php-version: [ '8.0', '8.1', '8.2' ]
                 composer-flags: [ '' ]
                 name: [ '' ]
                 include:
-                    -   php-version: 7.4
+                    -   php-version: 8.0
                         composer-flags: '--prefer-lowest'
                         name: '(prefer lowest dependencies)'
 
@@ -69,3 +70,4 @@ jobs:
               env:
                   SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
                   SLACK_TEST_CHANNEL: ${{ secrets.SLACK_TEST_CHANNEL }}
+                  CI: true

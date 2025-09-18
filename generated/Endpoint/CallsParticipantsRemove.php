@@ -22,14 +22,14 @@ class CallsParticipantsRemove extends \JoliCode\Slack\Api\Runtime\Client\BaseEnd
      *
      * @param array $formParameters {
      *
-     *     @var string $id `id` returned by the [`calls.add`](/methods/calls.add) method.
-     *     @var string $users The list of users to remove as participants in the Call. [Read more on how to specify users here](/apis/calls#users).
-     * }
+     * @var string $id `id` returned by the [`calls.add`](/methods/calls.add) method.
+     * @var string $users The list of users to remove as participants in the Call. [Read more on how to specify users here](/apis/calls#users).
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `calls:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `calls:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class CallsParticipantsRemove extends \JoliCode\Slack\Api\Runtime\Client\BaseEnd
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\CallsParticipantsRemovePostResponse200|\JoliCode\Slack\Api\Model\CallsParticipantsRemovePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsParticipantsRemovePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsParticipantsRemovePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsParticipantsRemovePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsParticipantsRemovePostResponsedefault', 'json');
     }
 }

@@ -22,17 +22,17 @@ class AdminConversationsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEn
      *
      * @param array $formParameters {
      *
-     *     @var string $description description of the public or private channel to create
-     *     @var bool $is_private When `true`, creates a private channel instead of a public channel
-     *     @var string $name name of the public or private channel to create
-     *     @var bool $org_wide When `true`, the channel will be available org-wide. Note: if the channel is not `org_wide=true`, you must specify a `team_id` for this channel
-     *     @var string $team_id The workspace to create the channel in. Note: this argument is required unless you set `org_wide=true`.
-     * }
+     * @var string $description description of the public or private channel to create
+     * @var bool   $is_private When `true`, creates a private channel instead of a public channel
+     * @var string $name name of the public or private channel to create
+     * @var bool   $org_wide When `true`, the channel will be available org-wide. Note: if the channel is not `org_wide=true`, you must specify a `team_id` for this channel
+     * @var string $team_id The workspace to create the channel in. Note: this argument is required unless you set `org_wide=true`.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.conversations:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.conversations:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -92,16 +92,16 @@ class AdminConversationsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEn
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminConversationsCreatePostResponse200|\JoliCode\Slack\Api\Model\AdminConversationsCreatePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsCreatePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsCreatePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminConversationsCreatePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminConversationsCreatePostResponsedefault', 'json');
     }
 }

@@ -22,14 +22,14 @@ class AdminUsersRemove extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
      *
      * @param array $formParameters {
      *
-     *     @var string $team_id the ID (`T1234`) of the workspace
-     *     @var string $user_id The ID of the user to remove.
-     * }
+     * @var string $team_id the ID (`T1234`) of the workspace
+     * @var string $user_id The ID of the user to remove.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.users:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.users:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class AdminUsersRemove extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminUsersRemovePostResponse200|\JoliCode\Slack\Api\Model\AdminUsersRemovePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersRemovePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersRemovePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminUsersRemovePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminUsersRemovePostResponsedefault', 'json');
     }
 }

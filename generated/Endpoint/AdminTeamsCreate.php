@@ -22,16 +22,16 @@ class AdminTeamsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
      *
      * @param array $formParameters {
      *
-     *     @var string $team_description description for the team
-     *     @var string $team_discoverability Who can join the team. A team's discoverability can be `open`, `closed`, `invite_only`, or `unlisted`.
-     *     @var string $team_domain team domain (for example, slacksoftballteam)
-     *     @var string $team_name Team name (for example, Slack Softball Team).
-     * }
+     * @var string $team_description description for the team
+     * @var string $team_discoverability Who can join the team. A team's discoverability can be `open`, `closed`, `invite_only`, or `unlisted`.
+     * @var string $team_domain team domain (for example, slacksoftballteam)
+     * @var string $team_name Team name (for example, Slack Softball Team).
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `admin.teams:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `admin.teams:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -90,16 +90,16 @@ class AdminTeamsCreate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint i
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminTeamsCreatePostResponse200|\JoliCode\Slack\Api\Model\AdminTeamsCreatePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsCreatePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsCreatePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsCreatePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsCreatePostResponsedefault', 'json');
     }
 }

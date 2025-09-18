@@ -22,8 +22,8 @@ class DndEndDnd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `dnd:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `dnd:write`
+     *             }
      */
     public function __construct(array $headerParameters = [])
     {
@@ -67,16 +67,16 @@ class DndEndDnd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\DndEndDndPostResponse200|\JoliCode\Slack\Api\Model\DndEndDndPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DndEndDndPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DndEndDndPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\DndEndDndPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\DndEndDndPostResponsedefault', 'json');
     }
 }

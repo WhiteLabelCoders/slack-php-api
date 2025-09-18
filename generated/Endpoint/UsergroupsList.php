@@ -22,12 +22,12 @@ class UsergroupsList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
      *
      * @param array $queryParameters {
      *
-     *     @var bool $include_count include the number of users in each User Group
-     *     @var bool $include_disabled include disabled User Groups
-     *     @var bool $include_users include the list of users for each User Group
-     *     @var string $team_id Encoded team id to list user groups in, required if org token is used
-     *     @var string $token Authentication token. Requires scope: `usergroups:read`
-     * }
+     * @var bool   $include_count include the number of users in each User Group
+     * @var bool   $include_disabled include disabled User Groups
+     * @var bool   $include_users include the list of users for each User Group
+     * @var string $team_id Encoded team id to list user groups in, required if org token is used
+     * @var string $token Authentication token. Requires scope: `usergroups:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -75,16 +75,16 @@ class UsergroupsList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint imp
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\UsergroupsListGetResponse200|\JoliCode\Slack\Api\Model\UsergroupsListGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsListGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsListGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\UsergroupsListGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\UsergroupsListGetResponsedefault', 'json');
     }
 }

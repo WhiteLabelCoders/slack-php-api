@@ -22,14 +22,14 @@ class CallsEnd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implement
      *
      * @param array $formParameters {
      *
-     *     @var int $duration Call duration in seconds
-     *     @var string $id `id` returned when registering the call using the [`calls.add`](/methods/calls.add) method.
-     * }
+     * @var int    $duration Call duration in seconds
+     * @var string $id `id` returned when registering the call using the [`calls.add`](/methods/calls.add) method.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `calls:write`
-     * }
+     * @var string $token Authentication token. Requires scope: `calls:write`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class CallsEnd extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implement
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\CallsEndPostResponse200|\JoliCode\Slack\Api\Model\CallsEndPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsEndPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsEndPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\CallsEndPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\CallsEndPostResponsedefault', 'json');
     }
 }

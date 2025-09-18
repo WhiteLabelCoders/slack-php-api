@@ -22,14 +22,14 @@ class ViewsPush extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
      *
      * @param array $formParameters {
      *
-     *     @var string $trigger_id exchange a trigger to post to the user
-     *     @var string $view A [view payload](/reference/surfaces/views). This must be a JSON-encoded string.
-     * }
+     * @var string $trigger_id exchange a trigger to post to the user
+     * @var string $view A [view payload](/reference/surfaces/views). This must be a JSON-encoded string.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `none`
-     * }
+     * @var string $token Authentication token. Requires scope: `none`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -86,16 +86,16 @@ class ViewsPush extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implemen
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\ViewsPushPostResponse200|\JoliCode\Slack\Api\Model\ViewsPushPostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ViewsPushPostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ViewsPushPostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ViewsPushPostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ViewsPushPostResponsedefault', 'json');
     }
 }

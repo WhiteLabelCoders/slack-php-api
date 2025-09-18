@@ -28,6 +28,12 @@ abstract class SlackTokenDependentTest extends TestCase
 
     protected function createClient(?string $token = null): Client
     {
+        // On GitHub Action, we get rate limit issues with Slack API calls because tests are run in parallel
+        // This "sleep" method tries to share the load.
+        if ($_SERVER['CI'] ?? false) {
+            sleep(10); // @see https://github.com/jolicode/slack-php-api/issues/163
+        }
+
         return ClientFactory::create(null === $token ? $_SERVER['SLACK_TOKEN'] : $token);
     }
 }

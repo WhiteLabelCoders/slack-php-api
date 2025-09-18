@@ -16,6 +16,10 @@ namespace JoliCode\Slack\Api\Model;
 class ChatScheduledMessagesListGetResponse200
 {
     /**
+     * @var array
+     */
+    protected $initialized = [];
+    /**
      * @var bool|null
      */
     protected $ok;
@@ -24,9 +28,14 @@ class ChatScheduledMessagesListGetResponse200
      */
     protected $responseMetadata;
     /**
-     * @var ChatScheduledMessagesListGetResponse200ScheduledMessagesItem[]|null
+     * @var list<ChatScheduledMessagesListGetResponse200ScheduledMessagesItem>|null
      */
     protected $scheduledMessages;
+
+    public function isInitialized($property): bool
+    {
+        return \array_key_exists($property, $this->initialized);
+    }
 
     public function getOk(): ?bool
     {
@@ -35,6 +44,7 @@ class ChatScheduledMessagesListGetResponse200
 
     public function setOk(?bool $ok): self
     {
+        $this->initialized['ok'] = true;
         $this->ok = $ok;
 
         return $this;
@@ -47,13 +57,14 @@ class ChatScheduledMessagesListGetResponse200
 
     public function setResponseMetadata(?ChatScheduledMessagesListGetResponse200ResponseMetadata $responseMetadata): self
     {
+        $this->initialized['responseMetadata'] = true;
         $this->responseMetadata = $responseMetadata;
 
         return $this;
     }
 
     /**
-     * @return ChatScheduledMessagesListGetResponse200ScheduledMessagesItem[]|null
+     * @return list<ChatScheduledMessagesListGetResponse200ScheduledMessagesItem>|null
      */
     public function getScheduledMessages(): ?array
     {
@@ -61,10 +72,11 @@ class ChatScheduledMessagesListGetResponse200
     }
 
     /**
-     * @param ChatScheduledMessagesListGetResponse200ScheduledMessagesItem[]|null $scheduledMessages
+     * @param list<ChatScheduledMessagesListGetResponse200ScheduledMessagesItem>|null $scheduledMessages
      */
     public function setScheduledMessages(?array $scheduledMessages): self
     {
+        $this->initialized['scheduledMessages'] = true;
         $this->scheduledMessages = $scheduledMessages;
 
         return $this;

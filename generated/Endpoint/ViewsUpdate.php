@@ -22,16 +22,16 @@ class ViewsUpdate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implem
      *
      * @param array $formParameters {
      *
-     *     @var string $external_id A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either `view_id` or `external_id` is required.
-     *     @var string $hash a string that represents view state to protect against possible race conditions
-     *     @var string $view A [view object](/reference/surfaces/views). This must be a JSON-encoded string.
-     *     @var string $view_id A unique identifier of the view to be updated. Either `view_id` or `external_id` is required.
-     * }
+     * @var string $external_id A unique identifier of the view set by the developer. Must be unique for all views on a team. Max length of 255 characters. Either `view_id` or `external_id` is required.
+     * @var string $hash a string that represents view state to protect against possible race conditions
+     * @var string $view A [view object](/reference/surfaces/views). This must be a JSON-encoded string.
+     * @var string $view_id A unique identifier of the view to be updated. Either `view_id` or `external_id` is required.
+     *             }
      *
      * @param array $headerParameters {
      *
-     *     @var string $token Authentication token. Requires scope: `none`
-     * }
+     * @var string $token Authentication token. Requires scope: `none`
+     *             }
      */
     public function __construct(array $formParameters = [], array $headerParameters = [])
     {
@@ -90,16 +90,16 @@ class ViewsUpdate extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoint implem
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\ViewsUpdatePostResponse200|\JoliCode\Slack\Api\Model\ViewsUpdatePostResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ViewsUpdatePostResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ViewsUpdatePostResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\ViewsUpdatePostResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\ViewsUpdatePostResponsedefault', 'json');
     }
 }

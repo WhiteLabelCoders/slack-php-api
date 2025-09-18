@@ -22,11 +22,11 @@ class AdminTeamsAdminsList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoi
      *
      * @param array $queryParameters {
      *
-     *     @var string $cursor set `cursor` to `next_cursor` returned by the previous call to list items in the next page
-     *     @var int $limit the maximum number of items to return
-     *     @var string $team_id
-     *     @var string $token Authentication token. Requires scope: `admin.teams:read`
-     * }
+     * @var string $cursor set `cursor` to `next_cursor` returned by the previous call to list items in the next page
+     * @var int    $limit the maximum number of items to return
+     * @var string $team_id
+     * @var string $token Authentication token. Requires scope: `admin.teams:read`
+     *             }
      */
     public function __construct(array $queryParameters = [])
     {
@@ -73,16 +73,16 @@ class AdminTeamsAdminsList extends \JoliCode\Slack\Api\Runtime\Client\BaseEndpoi
     }
 
     /**
-     * {@inheritdoc}
-     *
      * @return \JoliCode\Slack\Api\Model\AdminTeamsAdminsListGetResponse200|\JoliCode\Slack\Api\Model\AdminTeamsAdminsListGetResponsedefault|null
      */
-    protected function transformResponseBody(string $body, int $status, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
+    protected function transformResponseBody(\Psr\Http\Message\ResponseInterface $response, \Symfony\Component\Serializer\SerializerInterface $serializer, ?string $contentType = null)
     {
+        $status = $response->getStatusCode();
+        $body = (string) $response->getBody();
         if (200 === $status) {
-            return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsAdminsListGetResponse200', 'json');
+            return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsAdminsListGetResponse200', 'json');
         }
 
-        return $serializer->deserialize($body, 'JoliCode\\Slack\\Api\\Model\\AdminTeamsAdminsListGetResponsedefault', 'json');
+        return $serializer->deserialize($body, 'JoliCode\Slack\Api\Model\AdminTeamsAdminsListGetResponsedefault', 'json');
     }
 }
